@@ -23,7 +23,7 @@ func CreateNewRemux() *Remux {
 	return &re
 }
 
-// ServeHttp 实现 net/http http.Handler interface
+// ServeHttp 实现 net/http http.GetHandler interface
 func (re *Remux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	re.middleHandler.ServeHTTP(w, r)
 }
@@ -63,7 +63,7 @@ func (re *Remux) routeMiddleware() http.HandlerFunc {
 	return http.HandlerFunc(f)
 }
 
-// packagefun 用于包装 Handler 确保返回值能够输出
+// packagefun 用于包装 GetHandler 确保返回值能够输出
 func packagefun(fun ReHandlerFun) http.HandlerFunc {
 	f := func(w http.ResponseWriter, req *http.Request) {
 		w.Write([]byte(fun(req.Context(), req)))

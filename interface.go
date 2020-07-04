@@ -7,6 +7,6 @@ import (
 
 // Controller 接口定义
 type Controller interface {
-	Path() string
-	Handler(context.Context, *http.Request) string
+	GetPath() string
+	GetHandler() func(context.Context, *http.Request) string
 }

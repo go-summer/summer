@@ -1,6 +1,7 @@
 package summer
 
 import (
+	"context"
 	"net"
 	"net/http"
 )
@@ -33,7 +34,7 @@ func (a Application) Run() {
 
 	// 注册全部的 handler
 	for _, c := range App.Controllers {
-		re.SetHandlerMapping(c.Path(), c.Handler)
+		re.SetHandlerMapping(c.GetPath(), c.GetHandler())
 	}
 
 	listener, err := net.Listen("tcp", ":"+App.Port)
@@ -48,6 +49,15 @@ func (a Application) Run() {
 		print(err)
 	}
 }
+func (a *Application) SetPort(port string) {
+	a.Port = port
+}
+func (a *Application) SetController(path string, handler func(context.Context, *http.Request) string) {
+	a.Controllers = append(a.Controllers, C{
+		Path:    path,
+		Handler: handler,
+	})
+}
 
 func logo() {
 	//http://patorjk.com/software/taag/#p=display&f=Doom&t=Summer
@@ -59,4 +69,18 @@ func logo() {
 			" `--. \\ | | | '_ ` _ \\| '_ ` _ \\ / _ \\ '__|\n" +
 			"/\\__/ / |_| | | | | | | | | | | |  __/ |   \n" +
 			"\\____/ \\__,_|_| |_| |_|_| |_| |_|\\___|_|   \n")
+}
+
+// handler
+type C struct {
+	Path    string
+	Handler func(context.Context, *http.Request) string
+}
+
+func (c C) GetPath() string {
+	return c.Path
+
+}
+func (c C) GetHandler() func(context.Context, *http.Request) string {
+	return c.Handler
 }
