@@ -36,7 +36,7 @@ func (a Application) Run() {
 		re.SetHandlerMapping(c.Path(), c.Handler)
 	}
 
-	listener, err := net.Listen("tcp", App.Port)
+	listener, err := net.Listen("tcp", ":"+App.Port)
 	if err != nil {
 		print(err)
 		return
@@ -52,10 +52,11 @@ func (a Application) Run() {
 func logo() {
 	//http://patorjk.com/software/taag/#p=display&f=Doom&t=Summer
 	println(
-		" _____                                     " +
-			"/  ___|                                    " +
-			"\\ `--. _   _ _ __ ___  _ __ ___   ___ _ __ " +
-			" `--. \\ | | | '_ ` _ \\| '_ ` _ \\ / _ \\ '__|" +
-			"/\\__/ / |_| | | | | | | | | | | |  __/ |   " +
-			"\\____/ \\__,_|_| |_| |_|_| |_| |_|\\___|_|   ")
+
+		" _____                                     \n" +
+			"/  ___|                                    \n" +
+			"\\ `--. _   _ _ __ ___  _ __ ___   ___ _ __ \n" +
+			" `--. \\ | | | '_ ` _ \\| '_ ` _ \\ / _ \\ '__|\n" +
+			"/\\__/ / |_| | | | | | | | | | | |  __/ |   \n" +
+			"\\____/ \\__,_|_| |_| |_|_| |_| |_|\\___|_|   \n")
 }
